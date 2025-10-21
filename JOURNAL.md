@@ -6,10 +6,6 @@
   ==================================================================
 -->
 
-This is my journal of the design and building process of **odins-eye**.  
-You can view this journal in more detail on **Hack Club Blueprint** [here](https://blueprint.hackclub.com/projects/413).
-
-
 ## 10/12/2025 - Research and Project BOM  
 
 I started brainstorming how a DIY speed camera could be possible 3 days ago, and I am quite content with the basic idea I have after a few hours of project and parts research. My original idea was for the speed camera to have a stand that can rotate and follow vehicles while they pass, but I quickly realized that this would overcomplicate the project too much because I would have to design a stand from scratch. I settled for a universal stand where the speed camera and sensor are inside a 3d-printed case that screws onto it. I also wanted a touch screen where you could do some sort of onboarding every time you turned the speed camera on, but this idea was also quickly discarded because the onboarding would be unnecessary and small oled displays usually don't have touch capabilities. I needed the project to be standalone because my idea was for it to be in front of my house and gather data from the passing vehicles. I thought that having a battery holder and a slide switch to turn on was a good idea, but, after talking it over with my dad we decided that it was a better idea to have a power bank that would connect to the pcb/carrier board inside the case through a type-c plug.  
@@ -28,4 +24,46 @@ Complete Design:
 
 PCB/Carrier Board:
 ![pcb-carrier-board.jpg](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTc4MiwicHVyIjoiYmxvYl9pZCJ9fQ==--c6c195fdda0c5f5191ce8cc83e85fd0aca28ebab/pcb-carrier-board.jpg)  
+
+## 10/21/2025 - Updated Speed Measurement Method  
+
+I realize that measuring the speed of a vehicle from a video is extremely difficult. There are so many variables that come into play. Now I see how silly my idea was. Here are some of the things that make my original idea so challenging:
+
+- You need to know the real-world distance the car actually travelled
+- The video's timing is often unreliable because the frame rate isn't constant
+- The camera's angle and lens bend the image
+
+So... I decided to have a long chat with Gemini about other options. I looked into the doppler radar but realized that for it to work I would also need an amplifier, a sperate analog circuit, because the signal would be too weak and noisy for the raspi to read directly. I also looked at the microwave motion sensor but that didn't work because it would detect 360 degrees, so it would also trigger objects moving behind it.
+
+More Messy Iteration:
+![more-messy-iteration.jpg](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQ4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--9f1115928263a1fa83e7a27837868f58f344e575/more-messy-iteration.jpg)
+
+Then I had a eureka moment; I realized that maybe we could somehow use the TF-Luna lidar to measure the speed of vehicles. Very soon I realized that this could work, here are some reasons why:
+
+- It uses a narrow laser beam, so it will only detect cars passing in front of it
+- It's electronically simple, you can connect it directly to the raspi's GPIO pins (via I2C)
+- It has very low power consumption and won't put any strain on the power bank (much more efficient than the camera-only method)
+- It's extremely fast, at 100Hz, the sensor can check the distance 100 times per second
+- It's very compact and it was already in the original design
+
+https://www.amazon.es/-/en/Benewake-TF-Luna-Compatible-Pixhawk-Raspberry/dp/B0DKCSF8C5
+
+Now I would like to briefly explain what a lidar is and what it does. A lidar works by shooting a tiny beam of light and measuring exactly how long it takes for that light to bounce off an object and return.
+
+My first idea on how to get speed was to use the Pythagorean theorem, to use it there would be one fixed distance in the code (a) the perpendicular distance to the side of the road, and we would use the lidar to measure the diagonal distance to the car (c). Using the Pythagorean theorem we would solve for the car's true position along the road (b = sqrt(c^2 - a^2)). By taking two of these measurements in say 0.1 seconds, we could determine the distance the car travelled and divide by the time to find the speed.
+
+The only problem with this method is that it wouldn't be fully drop-and-go because you would have to make sure that (a) is the same in the code as in real life and if not change one of the two. What I am looking for is a completely stand-alone speed camera that starts working without having to be placed at any specific distance.
+
+Knowing this I looked into some other options and found a very promising one; the least squares fit option. In this one the lidar is placed facing the road at roughly 45-degrees angle (I plan on designing a lock on the case). The lidar sends a distance reading every 0.1s until it detects an object in its path, once this happens it starts sending distance readings every 0.001 or 0.005 (I haven't decided yet) and because the object is getting closer at an angle, the distance will decrease as long as the lidar isn't hitting the side of the vehicle. Then it fits a straight line through the readings. The slope of that line tells how fast the distance is shrinking. Because the sensor is tilted, it divides that slope by cos(θ) to get the real speed of the object moving across its view.
+
+To prove this concept, I built some simple example code in python (which I might have to replicate in C++ if speed is a problem) to test the basic idea. I would ask chatgpt to generate a set of distances and the corresponding signal strength and I would test it, honestly I think this might actually work:
+
+![test-car.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQzMywicHVyIjoiYmxvYl9pZCJ9fQ==--bf818989014f3b809db6fc6fd4abd187fdf042ba/test-car.png)
+
+![50-kph.png](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MzQzNCwicHVyIjoiYmxvYl9pZCJ9fQ==--c25d06e0fb295b4c6d34a9f7ae3bf374815de0a3/50-kph.png)
+
+Code:
+https://github.com/adrirubio/odins-eye/blob/main/firmware/speed-calculation-code.py
+
+To see how this works I bought a TF-Luna lidar to try both of these methods out. It still hasn't arrived but when it does I plan on seeing which of the two speed measurement methods works better and do a proof of concept.  
 
