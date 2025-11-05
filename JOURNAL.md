@@ -67,3 +67,22 @@ https://github.com/adrirubio/odins-eye/blob/main/firmware/speed-calculation-code
 
 To see how this works I bought a TF-Luna lidar to try both of these methods out. It still hasn't arrived but when it does I plan on seeing which of the two speed measurement methods works better and do a proof of concept.  
 
+## 11/5/2025 - Starting The Schematics  
+
+The TF Luna arrived, but because of an ordering mistake, it didn't have the right cables so I couldn't connect it to the breadboard. I could buy the cable separately, but I found one that has all the right cables and is quite cheap, so I decided to buy it. Unfortunately, it will take around two weeks to arrive, so I decided to get started with the schematics.
+
+TF Luna: https://www.amazon.com/Wishiot-TF-Luna-Single-Point-Terminal-WiFi_Lora_32/dp/B09PZ559ZB
+
+This is my first time designing schematics, so to begin with, I looked at some of the guides Blueprint offers. I began by trying EasyEDA. Created an account, started the project, and got a better idea of what components I needed. I started inserting some of the components into EasyEDA. At this point, I needed to get the basics down so I looked at some tutorials. One that helped a lot was this one: https://www.youtube.com/watch?v=R_Ud-FxUw0g
+
+After these tutorials, I thought that I might also have a look at KiCad, so I downloaded it, created the odins-eye project, and having a better idea of what I was doing, I started to get a good feel for it. After following this tutorial for a bit: https://docs.kicad.org/6.0/en/getting_started_in_kicad/getting_started_in_kicad.html, I decided that I was ready to begin designing the speed camera.
+
+The first thing that I looked at was the raspi's 40 GPIO pin header (2x20). Because there wasn't the exact model I needed, and also because I needed to get familiar with KiCad, I decided to design my own. Which I am quite proud of.
+
+Next, I inserted a 6-pin connector which represents the JST connector. I also added the USB-C plug, a 30-pin connector which represents the ZIF connector for the 0.96 oled, one LED with a corresponding resistor, and two more resistors for a voltage divider to measure the battery.
+
+This is where I’m up to so far:
+
+![kicad2](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6ODY5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--8ad5fabd315fc00ab0ccdc52490d2701bc1f1c89/kicad2.png)
+  
+
