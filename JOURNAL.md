@@ -86,3 +86,23 @@ This is where I’m up to so far:
 ![kicad2](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6ODY5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--8ad5fabd315fc00ab0ccdc52490d2701bc1f1c89/kicad2.png)
   
 
+## 11/9/2025 - Wiring the Schematic  
+
+I started by laying out the different parts of the project, placing the inputs and power connections on the left, the processing in the middle, and the outputs on the right. This setup made it easier to visualize how data and power would flow through the system. Before wiring the sections, I spent some time researching and watching a few tutorials to make sure I understood everything. I also looked at a few example schematics to double-check pin configurations.
+
+For the plug, I found that I would actually need a USB-C receptacle because I just needed it for charging the circuit. I only connected the necessary power and ground pins and included the proper CC resistors for charging negotiation, then moved on to the 6-pin connector.
+The 6-pin connector was fairly easy because, using the pinout diagram from the TF-Luna we had bought, I connected 5V, RXD, TXD, and GND. The last two pins aren't used in this model.
+
+At this point, I connected 5V, GND, RXD, and TXD to pins 2, 6, 8, and 10 respectively on the raspi's GPIO header. I moved on to the 30-pin connector, and here I had some problems. I originally wanted this 30-pin connector because it has no extra PCB border and is great for custom enclosures. The problem is I would have to connect around 20–25 of the 30 pins.
+
+![30-pin-connector](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--58542bf7c016376419d83151e84e5a741fe3cd8e/30-pin-connector.png)
+
+I would also have to add capacitors with different values and deal with a large number of pins. This is highly error-prone, and iteration with hardware isn't quick. In the end, I decided to delete the 30-pin connector and use the 7-pin connector, which would represent a header for an OLED like this:
+https://www.amazon.es/-/en/HiLetgo-SSD1331-Display-3-3V-5V-Colorful/dp/B0813BB3K7
+
+I wired this 7-pin connector and, lastly, wired the LED, which I decided would be green, using a 1 kΩ resistor. Once everything was wired, I added some no-connect flags on a few unused pins, and a small note on the USB-C. I finished by fixing two or three warnings from the ERC.
+
+![schematic2](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc1MSwicHVyIjoiYmxvYl9pZCJ9fQ==--749adb502c9cc9b765d439c0fd0e4a3678013b01/schematic2.png)![schematic](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc1MiwicHVyIjoiYmxvYl9pZCJ9fQ==--c0372bcab24fa50e0912b3beff81d721b83ce625/schematic.png)
+
+  
+
