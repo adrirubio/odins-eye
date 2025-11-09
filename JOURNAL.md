@@ -67,7 +67,7 @@ https://github.com/adrirubio/odins-eye/blob/main/firmware/speed-calculation-code
 
 To see how this works I bought a TF-Luna lidar to try both of these methods out. It still hasn't arrived but when it does I plan on seeing which of the two speed measurement methods works better and do a proof of concept.  
 
-## 11/5/2025 - Starting The Schematics  
+## 11/5/2025 - Starting The Schematic  
 
 The TF Luna arrived, but because of an ordering mistake, it didn't have the right cables so I couldn't connect it to the breadboard. I could buy the cable separately, but I found one that has all the right cables and is quite cheap, so I decided to buy it. Unfortunately, it will take around two weeks to arrive, so I decided to get started with the schematics.
 
