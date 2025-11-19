@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "raspberry-pi-zero-socket")(type "KiCad")(uri "${KIPRJMOD}/raspberry-pi-zero-socket.pretty")(options "")(descr ""))
+  (lib (name "odins-eye-pcb")(type "KiCad")(uri "/home/adrian/Documents/odins-eye/odins-eye-pcb.pretty")(options "")(descr ""))
+)

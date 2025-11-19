@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "raspi-zero-2w")(type "KiCad")(uri "${KIPRJMOD}/raspi-zero-2w.kicad_sym")(options "")(descr ""))
+)
