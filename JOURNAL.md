@@ -67,3 +67,42 @@ https://github.com/adrirubio/odins-eye/blob/main/firmware/speed-calculation-code
 
 To see how this works I bought a TF-Luna lidar to try both of these methods out. It still hasn't arrived but when it does I plan on seeing which of the two speed measurement methods works better and do a proof of concept.  
 
+## 11/5/2025 - Starting The Schematic  
+
+The TF Luna arrived, but because of an ordering mistake, it didn't have the right cables so I couldn't connect it to the breadboard. I could buy the cable separately, but I found one that has all the right cables and is quite cheap, so I decided to buy it. Unfortunately, it will take around two weeks to arrive, so I decided to get started with the schematics.
+
+TF Luna: https://www.amazon.com/Wishiot-TF-Luna-Single-Point-Terminal-WiFi_Lora_32/dp/B09PZ559ZB
+
+This is my first time designing schematics, so to begin with, I looked at some of the guides Blueprint offers. I began by trying EasyEDA. Created an account, started the project, and got a better idea of what components I needed. I started inserting some of the components into EasyEDA. At this point, I needed to get the basics down so I looked at some tutorials. One that helped a lot was this one: https://www.youtube.com/watch?v=R_Ud-FxUw0g
+
+After these tutorials, I thought that I might also have a look at KiCad, so I downloaded it, created the odins-eye project, and having a better idea of what I was doing, I started to get a good feel for it. After following this tutorial for a bit: https://docs.kicad.org/6.0/en/getting_started_in_kicad/getting_started_in_kicad.html, I decided that I was ready to begin designing the speed camera.
+
+The first thing that I looked at was the raspi's 40 GPIO pin header (2x20). Because there wasn't the exact model I needed, and also because I needed to get familiar with KiCad, I decided to design my own. Which I am quite proud of.
+
+Next, I inserted a 6-pin connector which represents the JST connector. I also added the USB-C plug, a 30-pin connector which represents the ZIF connector for the 0.96 oled, one LED with a corresponding resistor, and two more resistors for a voltage divider to measure the battery.
+
+This is where I’m up to so far:
+
+![kicad2](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6ODY5NiwicHVyIjoiYmxvYl9pZCJ9fQ==--8ad5fabd315fc00ab0ccdc52490d2701bc1f1c89/kicad2.png)
+  
+
+## 11/9/2025 - Wiring the Schematic  
+
+I started by laying out the different parts of the project, placing the inputs and power connections on the left, the processing in the middle, and the outputs on the right. This setup made it easier to visualize how data and power would flow through the system. Before wiring the sections, I spent some time researching and watching a few tutorials to make sure I understood everything. I also looked at a few example schematics to double-check pin configurations.
+
+For the plug, I found that I would actually need a USB-C receptacle because I just needed it for charging the circuit. I only connected the necessary power and ground pins and included the proper CC resistors for charging negotiation, then moved on to the 6-pin connector.
+The 6-pin connector was fairly easy because, using the pinout diagram from the TF-Luna we had bought, I connected 5V, RXD, TXD, and GND. The last two pins aren't used in this model.
+
+At this point, I connected 5V, GND, RXD, and TXD to pins 2, 6, 8, and 10 respectively on the raspi's GPIO header. I moved on to the 30-pin connector, and here I had some problems. I originally wanted this 30-pin connector because it has no extra PCB border and is great for custom enclosures. The problem is I would have to connect around 20–25 of the 30 pins.
+
+![30-pin-connector](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc0NiwicHVyIjoiYmxvYl9pZCJ9fQ==--58542bf7c016376419d83151e84e5a741fe3cd8e/30-pin-connector.png)
+
+I would also have to add capacitors with different values and deal with a large number of pins. This is highly error-prone, and iteration with hardware isn't quick. In the end, I decided to delete the 30-pin connector and use the 7-pin connector, which would represent a header for an OLED like this:
+https://www.amazon.es/-/en/HiLetgo-SSD1331-Display-3-3V-5V-Colorful/dp/B0813BB3K7
+
+I wired this 7-pin connector and, lastly, wired the LED, which I decided would be green, using a 1 kΩ resistor. Once everything was wired, I added some no-connect flags on a few unused pins, and a small note on the USB-C. I finished by fixing two or three warnings from the ERC.
+
+![schematic2](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc1MSwicHVyIjoiYmxvYl9pZCJ9fQ==--749adb502c9cc9b765d439c0fd0e4a3678013b01/schematic2.png)![schematic](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6OTc1MiwicHVyIjoiYmxvYl9pZCJ9fQ==--c0372bcab24fa50e0912b3beff81d721b83ce625/schematic.png)
+
+  
+

@@ -2,7 +2,7 @@ Name,Quantity,Component
 "Raspberry Pi Zero 2 W",1,"Controller"
 "Raspberry Pi Camera Module 3",1,"Camera Module"
 "TF-Luna Lidar Sensor",1,"Lidar Sensor"
-"Bare 0.95-inch OLED Display",1,"Display"
+"0.95-inch OLED Display",1,"Display"
 "microSD Card (32GB)",1,"Storage"
 "Custom Carrier PCB",1,"PCB"
 "Custom 3D Printed Case",1,"Enclosure"
