@@ -29,7 +29,7 @@ const float MIN_SPEED_KMH = 5.0;           // Reject speeds below 5 km/h (probab
 const float MAX_SPEED_KMH = 200.0;         // Reject speeds above 200 km/h (probably error)
 
 // Signal strength threshold
-const int MIN_SIGNAL_STRENGTH = 50;        // Minimum flux value for valid reading - LOWERED for better detection
+const int MIN_SIGNAL_STRENGTH = 20;        // Minimum flux value for valid reading - LOWERED for distant objects
 
 // Debug mode - set to true for detailed diagnostics
 const bool DEBUG_MODE = true;
@@ -179,7 +179,7 @@ void loop() {
 
         // ========== CALCULATE SPEED ==========
         float distanceChange = burst1Average - burst2Average;
-        float absDistanceChange = abs(distanceChange);
+        float absDistanceChange = fabs(distanceChange);
 
         if (DEBUG_MODE) {
             Serial.print(F("   Distance change: "));
@@ -326,7 +326,7 @@ bool isBaselineRestored(float reading) {
     }
 
     // Otherwise, restored when reading is close to the original baseline
-    float differenceFromBaseline = abs(baselineDistance - reading);
+    float differenceFromBaseline = fabs(baselineDistance - reading);
     return (differenceFromBaseline <= (BASELINE_TOLERANCE_CM / 100.0));
 }
 
@@ -399,11 +399,23 @@ float filterAndAverage(float readings[], int count) {
     float median = readings[count / 2];
 
     // Calculate MAD (Median Absolute Deviation)
-    float mad = 0;
+    // First, compute absolute deviations from median
+    float deviations[BURST_SIZE];
     for (int i = 0; i < count; i++) {
-        float dev = abs(readings[i] - median);
-        if (dev > mad) mad = dev;
+        deviations[i] = fabs(readings[i] - median);
     }
+
+    // Sort deviations to find their median (the MAD)
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (deviations[j] > deviations[j + 1]) {
+                float temp = deviations[j];
+                deviations[j] = deviations[j + 1];
+                deviations[j + 1] = temp;
+            }
+        }
+    }
+    float mad = deviations[count / 2];
 
     // Remove outliers and calculate average
     float sum = 0;
@@ -411,7 +423,7 @@ float filterAndAverage(float readings[], int count) {
 
     for (int i = 0; i < count; i++) {
         // Only remove if MAD is significant (> 2cm) and reading is far from median
-        if (mad > 0.02 && abs(readings[i] - median) > 2.5 * mad) {
+        if (mad > 0.02 && fabs(readings[i] - median) > 2.5 * mad) {
             if (DEBUG_MODE) {
                 Serial.print(F("      Outlier: "));
                 Serial.print(readings[i], 3);
