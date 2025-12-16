@@ -133,7 +133,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "gerbers/odins-eye-pcb-v1.1/")
+			(outputdirectory "gerbers/odins-eye-pcb-v1.2/")
 		)
 	)
 	(net 0 "")
