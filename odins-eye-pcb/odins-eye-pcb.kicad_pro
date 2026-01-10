@@ -517,10 +517,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "gerbers/odins-eye-pcb-v1.2/",
+      "plot": "gerbers/odins-eye-v1.3/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "odins-eye-pcb.step",
       "svg": "",
       "vrml": ""
     },
