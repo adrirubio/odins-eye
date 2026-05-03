@@ -38,7 +38,7 @@ Captured images are processed locally on a Raspberry Pi Zero 2 W, where the syst
 
 ## CAD Screenshots
 
-| Complete Assembly (Front View)| Complete Assembly (Back View) |
+| CAD Assembly (Front View)| CAD Assembly (Back View) |
 |-------------------------------|-------------------------------|
 | ![Assembly Model Front](screenshots/assembly-model-front.png) | ![Assembly Model Back](screenshots/assembly-model-back.png) |
 
@@ -62,7 +62,17 @@ Place the system facing the road and use the built-in gyroscope to help align th
 
 ## Odins Eye In Action
 
-**Coming Soon**
+| Complete Assembly (Front View)| Complete Assembly (Front View) |
+|-------------------------------|-------------------------------|
+| ![Complete Assembly Front View](screenshots/complete-assembly-front-view-1.jpg) | ![Complete Assembly Front View](screenshots/complete-assembly-front-view-2.jpg) |
+
+| Complete Assembly (Top View)| Complete Assembly (Side View) |
+|-----------------------------|-------------------------------|
+| ![Complete Assembly Top View](screenshots/complete-assembly-top-view.jpg) | ![Complete Assembly Side View](screenshots/complete-assembly-side-view.jpg) |
+
+| Complete Assembly (Back View)| Complete Assembly (Back View) |
+|------------------------------|-------------------------------|
+| ![Complete Assembly Back View](screenshots/complete-assembly-back-view-1.jpg) | ![Complete Assembly Back View](screenshots/complete-assembly-back-view-2.jpg) |
 
 ## License
 
