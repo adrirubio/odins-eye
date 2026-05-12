@@ -74,6 +74,12 @@ Place the system facing the road and use the built-in gyroscope to help align th
 |------------------------------|-------------------------------|
 | ![Complete Assembly Back View](screenshots/complete-assembly-back-view-1.jpg) | ![Complete Assembly Back View](screenshots/complete-assembly-back-view-2.jpg) |
 
+### Odins Eye Demo
+<a href="https://github.com/adrirubio/odins-eye/raw/main/demo/video/odins-eye-demo.mp4">Click here to download the demo video (MP4)</a>
+
+### YouTube Demo
+[Watch the demo on YouTube](https://youtu.be/xQ8l6ctQOk4)
+
 ## Running on the Pi
 
 The firmware lives in `firmware/`. Two entry points:
