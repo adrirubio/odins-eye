@@ -74,6 +74,47 @@ Place the system facing the road and use the built-in gyroscope to help align th
 |------------------------------|-------------------------------|
 | ![Complete Assembly Back View](screenshots/complete-assembly-back-view-1.jpg) | ![Complete Assembly Back View](screenshots/complete-assembly-back-view-2.jpg) |
 
+## Running on the Pi
+
+The firmware lives in `firmware/`. Two entry points:
+
+- `odins_eye_speed_monitor.py` — the live detector (TF-Luna sampling, gyro calibration, camera trigger, capture metadata).
+- `odins_eye_dashboard_server.py` — a small HTTP server that serves the latest captures at `http://<pi-ip>:8080`.
+
+### One-time setup on the Pi
+
+```bash
+sudo apt install python3-pil python3-smbus2 rpicam-apps
+git clone https://github.com/adrirubio/odins-eye.git ~/Documents/odins-eye
+sudo bash ~/Documents/odins-eye/firmware/systemd/install.sh
+```
+
+The install script copies the systemd units into `/etc/systemd/system/`, enables them, and starts both services. After a reboot, both come up automatically.
+
+### Manual run for roadside testing
+
+When you want the gyro calibration prompt and live burst logs in your terminal:
+
+```bash
+sudo systemctl stop odins-eye-detector
+bash ~/Documents/odins-eye/firmware/odins_eye_start.sh
+```
+
+Ctrl-C stops both detector and dashboard. To return to autostart mode:
+
+```bash
+sudo systemctl start odins-eye-detector
+```
+
+### Useful commands
+
+```bash
+systemctl status odins-eye-detector
+systemctl status odins-eye-dashboard
+journalctl -u odins-eye-detector -f          # live detector log
+journalctl -u odins-eye-dashboard -f         # live dashboard log
+```
+
 ## License
 
 MIT License

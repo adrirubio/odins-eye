@@ -1,0 +1,19 @@
+[Unit]
+Description=Odin's Eye dashboard server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=adrian
+Group=adrian
+WorkingDirectory=/home/adrian/Documents/odins-eye/firmware
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /home/adrian/Documents/odins-eye/firmware/odins_eye_dashboard_server.py --captures-dir /home/adrian/odins-eye-captures --port 8080
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

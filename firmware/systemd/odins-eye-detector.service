@@ -1,0 +1,20 @@
+[Unit]
+Description=Odin's Eye speed detector
+After=network-online.target odins-eye-dashboard.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=adrian
+Group=adrian
+SupplementaryGroups=i2c spi gpio video
+WorkingDirectory=/home/adrian/Documents/odins-eye/firmware
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /home/adrian/Documents/odins-eye/firmware/odins_eye_speed_monitor.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

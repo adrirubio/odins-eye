@@ -100,3 +100,4 @@ function escapeHtml(text) {
 }
 
 loadDashboard();
+setInterval(loadDashboard, 5000);
