@@ -62,6 +62,10 @@ Place the system facing the road and use the built-in gyroscope to help align th
 
 ## Odins Eye In Action
 
+| Complete Assembly |
+|-------------------------------|
+| ![Complete Assembly](screenshots/complete-assembly.jpg) |
+
 | Complete Assembly (Front View)| Complete Assembly (Front View) |
 |-------------------------------|-------------------------------|
 | ![Complete Assembly Front View](screenshots/complete-assembly-front-view-1.jpg) | ![Complete Assembly Front View](screenshots/complete-assembly-front-view-2.jpg) |
