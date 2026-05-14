@@ -82,7 +82,7 @@ Place the system facing the road and use the built-in gyroscope to help align th
 <a href="https://github.com/adrirubio/odins-eye/raw/main/demo/video/odins-eye-demo.mp4">Click here to download the demo video (MP4)</a>
 
 ### YouTube Demo
-[Watch the demo on YouTube](https://youtu.be/xQ8l6ctQOk4)
+[Watch the demo on YouTube](https://youtu.be/cNV2ZcgS8Qw)
 
 ## Running on the Pi
 
