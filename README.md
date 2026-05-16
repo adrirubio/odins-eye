@@ -1,4 +1,4 @@
-# Odins Eye
+# Odin's Eye
 
 **Full Design Process**: [Blueprint Project](https://blueprint.hackclub.com/projects/413)
 
